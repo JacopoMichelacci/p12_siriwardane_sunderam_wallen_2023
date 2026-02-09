@@ -292,3 +292,11 @@ def task_build_chartbook_site():
         ],
         "clean": True,
     }
+
+
+def task_pull_markit_cds():
+    return {
+        "actions": ["python src/pull_markit_cds.py"],
+        "targets": ["_data/markit_cds.parquet"],
+        "clean": True,
+    }
