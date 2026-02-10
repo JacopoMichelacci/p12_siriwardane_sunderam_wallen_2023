@@ -133,7 +133,7 @@ loaded by importing `config`.
 ### Naming Conventions
 
  - **`pull_` vs `load_`**: Files or functions that pull data from an external
- data source are prepended with "pull_", as in "pull_fred.py". Functions that
+ data source are prepended with "pull_". Functions that
  load data that has been cached in the "_data" folder are prepended with "load_".
  For example, inside of the `pull_CRSP_Compustat.py` file there is both a
  `pull_compustat` function and a `load_compustat` function. The first pulls from
@@ -164,4 +164,3 @@ conda env export > environment.yml
 ```
 
 **Tip:** Consider using `mamba` instead of `conda` for faster package resolution. Install via [miniforge](https://github.com/conda-forge/miniforge).
-
