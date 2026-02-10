@@ -34,6 +34,7 @@ def get_cds_data_as_dict(wrds_username=WRDS_USERNAME):
     db = wrds.Connection(wrds_username=wrds_username)
     cds_data = {}
     for year in range(2001, 2024):  # Loop from 2001 to 2023
+        print(f"Pulling markit.CDS{year}...", flush=True)
         table_name = f"markit.CDS{year}"  # Generate table name dynamically
         query = f"""
         SELECT DISTINCT
@@ -52,6 +53,7 @@ def get_cds_data_as_dict(wrds_username=WRDS_USERNAME):
             tenor IN ('1Y', '3Y', '5Y', '7Y', '10Y')
         """
         cds_data[year] = db.raw_sql(query, date_cols=["date"])
+        print(f"Finished markit.CDS{year}: {len(cds_data[year])} rows", flush=True)
     return cds_data
 
 

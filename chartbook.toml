@@ -3,7 +3,7 @@ type = "pipeline"
 chartbook_format_version = "0.0.2"
 
 [site]
-title = "p12_michelacci_ferreira_2026"
+title = "CDS-Bond Basis"
 author = "Michelacci and Ferreira"
 copyright = "2025"
 logo_path = ""
@@ -11,34 +11,134 @@ favicon_path = ""
 
 [pipeline]
 id = "SE"
-pipeline_name = "p12_michelacci_ferreira_2026"
-pipeline_description = "replication of paper "Segmented Arbitrage" by Emil Siriwardane, Adi Sunderam, and Jonathan Wallen."
+pipeline_name = "p12_siriwardane_sunderam_wallen_2023"
+pipeline_description = "replication of paper \"Segmented Arbitrage\" by Emil Siriwardane, Adi Sunderam, and Jonathan Wallen."
 lead_pipeline_developer = "Michelacci and Ferreira"
 contributors = ["Michelacci and Ferreira"]
 software_modules_command = "module load anaconda3/3.11.4 TeXLive/2023"
 runs_on_grid_or_windows_or_other = "Windows/Linux/MacOS"
-git_repo_URL = ""
+git_repo_URL = "https://github.com/JacopoMichelacci/p12_siriwardane_sunderam_wallen_2023"
 README_file_path = "./README.md"
 
 [notebooks]
 
-
-[notebooks.01_example_notebook_interactive]
-notebook_name = "Example Notebook Interactive"
-notebook_description = "Example notebook for demonstrating how to construct a Chartbook notebook."
-notebook_path = "_output/01_example_notebook_interactive.ipynb"
-
-
-[notebooks.02_example_with_dependencies]
-notebook_name = "Example Notebook with Dependencies"
-notebook_description = "Example notebook demonstrating dependencies on data pulls."
-notebook_path = "_output/02_example_with_dependencies.ipynb"
-
-
-
-
-[dataframes]
-
+[notebooks.summary_cds_bond_basis]
+notebook_name = "summary_cds_bond_basis"
+notebook_description = "Summary statistics and visualization of CDS-Bond basis"
+notebook_path = "_output/summary_cds_bond_basis_ipynb.ipynb"
+is_publishable = true
 
 [charts]
 
+[charts.cds_bond_basis_replication]
+chart_name = "CDS-Bond Basis Replication"
+short_description_chart = "CDS-Bond basis measuring implied arbitrage returns by rating category"
+dataframe_id = "ftsfr_cds_bond_basis_aggregated"
+path_to_html_chart = "./_output/cds_bond_basis_replication.html"
+path_to_excel_chart = ""
+topic_tags = ["CDS", "bonds", "arbitrage", "basis", "replication"]
+past_publications = ["Siriwardane, Sunderam, and Wallen - Segmented Arbitrage", "Nozawa (2017) - What Drives the Cross-Section of Credit Spreads?"]
+chart_docs_str = """
+## CDS-Bond Basis Replication
+
+This chart shows the implied risk-free rate from CDS-bond arbitrage trades, aggregated by rating category.
+
+### Methodology
+
+Based on Siriwardane, Sunderam, and Wallen's "Segmented Arbitrage" methodology.
+
+### Interpretation
+
+- Positive values indicate arbitrage opportunity
+- Investment Grade vs High Yield comparison shows relative opportunities
+"""
+
+[dataframes]
+
+[dataframes.ftsfr_cds_bond_basis_aggregated]
+dataframe_name = "ftsfr_cds_bond_basis_aggregated"
+short_description_df = "Aggregated CDS-Bond basis by rating category"
+data_sources = ["WRDS Markit", "Open Source Bond Asset Pricing"]
+data_providers = ["WRDS", "openbondassetpricing.com"]
+need_to_contact_provider = ["no"]
+data_on_pre_approved_list = ["No"]
+links_to_data_providers = ["https://wrds-www.wharton.upenn.edu", "https://openbondassetpricing.com"]
+topic_tags = ["CDS", "bonds", "arbitrage", "basis", "fixed income", "credit"]
+type_of_data_access = ["WRDS", "Public"]
+data_license = "WRDS / Public"
+license_expiration_date = ""
+provider_contact_info = ""
+restriction_on_use = "No"
+how_is_pulled = "Markit CDS from WRDS, bonds from Open Source Bond Asset Pricing"
+path_to_parquet_data = "./_data/ftsfr_cds_bond_basis_aggregated.parquet"
+path_to_excel_data = ""
+date_col = "ds"
+dataframe_docs_str = """
+## CDS-Bond Basis (Aggregated)
+
+Measures the implied arbitrage return from CDS and corporate bond markets, aggregated by rating category.
+
+### Columns
+
+| Column | Description |
+|--------|-------------|
+| unique_id | Rating category (Investment Grade, High Yield) |
+| ds | Date |
+| y | Implied risk-free rate (percent) |
+
+### Methodology
+
+Based on Siriwardane, Sunderam, and Wallen's "Segmented Arbitrage":
+
+CDS Basis:
+$$
+CB_{i, t, \\tau} = CDS_{i, t, \\tau} - FR_{i, t, \\tau}
+$$
+
+Implied Risk-Free Rate:
+$$
+rfr^{CDS}_{i, t, \\tau} = y_{t, \\tau} - CB_{i, t, \\tau}
+$$
+
+### Interpretation
+
+- Negative CB: Investor could earn arbitrage profit by going long bond + buying CDS protection
+- Positive rfr indicates positive arbitrage opportunity
+"""
+
+[dataframes.ftsfr_cds_bond_basis_non_aggregated]
+dataframe_name = "ftsfr_cds_bond_basis_non_aggregated"
+short_description_df = "Bond-level CDS-Bond basis"
+data_sources = ["WRDS Markit", "Open Source Bond Asset Pricing"]
+data_providers = ["WRDS", "openbondassetpricing.com"]
+need_to_contact_provider = ["no"]
+data_on_pre_approved_list = ["No"]
+links_to_data_providers = ["https://wrds-www.wharton.upenn.edu", "https://openbondassetpricing.com"]
+topic_tags = ["CDS", "bonds", "arbitrage", "basis", "fixed income", "credit"]
+type_of_data_access = ["WRDS", "Public"]
+data_license = "WRDS / Public"
+license_expiration_date = ""
+provider_contact_info = ""
+restriction_on_use = "No"
+how_is_pulled = "Markit CDS from WRDS, bonds from Open Source Bond Asset Pricing"
+path_to_parquet_data = "./_data/ftsfr_cds_bond_basis_non_aggregated.parquet"
+path_to_excel_data = ""
+date_col = "ds"
+dataframe_docs_str = """
+## CDS-Bond Basis (Non-Aggregated)
+
+Bond-level implied arbitrage returns from CDS and corporate bond markets.
+
+### Columns
+
+| Column | Description |
+|--------|-------------|
+| unique_id | Bond CUSIP |
+| ds | Date |
+| y | Implied risk-free rate (percent) |
+
+### Data Sources
+
+- Markit CDS data from WRDS
+- Corporate bond data from Open Source Bond Asset Pricing (openbondassetpricing.com)
+"""

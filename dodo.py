@@ -8,11 +8,12 @@ import shutil
 from os import environ, getcwd, path
 from pathlib import Path
 import sys
+
+sys.path.insert(1, "./src/")
+
 from colorama import Fore, Style, init
 from doit.reporter import ConsoleReporter
 from settings import config
-
-sys.path.insert(1, "./src/")
 
 
 try:
