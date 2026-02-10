@@ -1,0 +1,5 @@
+Name,Metadata Complete,Object Type,Identifier,Pipeline,Missing Fields,Page Link
+p12_siriwardane_sunderam_wallen_2023,False,pipeline,SE,SE,"build_commands, os_compatibility",../index.html
+ftsfr_cds_bond_basis_aggregated,True,dataframe,ftsfr_cds_bond_basis_aggregated,SE,,../dataframes/SE/ftsfr_cds_bond_basis_aggregated.html
+ftsfr_cds_bond_basis_non_aggregated,True,dataframe,ftsfr_cds_bond_basis_non_aggregated,SE,,../dataframes/SE/ftsfr_cds_bond_basis_non_aggregated.html
+CDS-Bond Basis Replication,False,chart,cds_bond_basis_replication,SE,"data_frequency, observation_period, lag_in_data_release, data_release_timing, units",../charts/SE.cds_bond_basis_replication.html

@@ -31,6 +31,8 @@ dependencies:
   - xlwings==0.33.3
   - zstandard==0.23.0
   - linearmodels==6.1
+  - wrds==3.2.0
+  - thefuzz==0.22.1
   - black==24.8.0
   - jupyter
   - jupyterlab

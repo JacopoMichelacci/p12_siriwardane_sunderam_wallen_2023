@@ -33,15 +33,16 @@ from settings import config
 
 OUTPUT_DIR = Path(config("OUTPUT_DIR"))
 
-import pull_fred
+# Placeholder for future data pull:
+# import pull_fred
 
 # %%
-df = pull_fred.load_fred()
-df
+# df = pull_fred.load_fred()
+# df
 
 # %%
-df[["GDP"]].dropna().plot()
-filepath = Path(OUTPUT_DIR) / "GDP_graph.png"
-plt.savefig(filepath)
+# df[["GDP"]].dropna().plot()
+# filepath = Path(OUTPUT_DIR) / "GDP_graph.png"
+# plt.savefig(filepath)
 
 # %%

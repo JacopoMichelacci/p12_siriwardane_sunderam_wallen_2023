@@ -32,6 +32,8 @@ xlrd>=2.0.1
 xlwings>=0.33.3
 zstandard>=0.23.0
 linearmodels>=6.1
+wrds
+thefuzz==0.22.1
 
 # Jupyter dependencies
 jupyter
@@ -42,6 +44,5 @@ notebook
 
 # Documentation/notebook rendering dependencies
 chartbook[all]
-
 
 
