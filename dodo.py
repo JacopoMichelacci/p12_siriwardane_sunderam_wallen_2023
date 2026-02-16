@@ -114,67 +114,6 @@ def task_config():
     }
 
 
-# def task_pull():
-#     """Pull data from external sources"""
-#     yield {
-#         "name": "placeholder",
-#         "doc": "No external pulls configured.",
-#         "actions": [],
-#         "targets": [],
-#         "file_dep": [],
-#         "clean": [],
-#     }
-
-
-# def task_summary_stats():
-#     """Generate summary statistics tables"""
-#     file_dep = ["./src/example_table.py"]
-#     file_output = [
-#         "example_table.tex",
-#         "pandas_to_latex_simple_table1.tex",
-#     ]
-#     targets = [OUTPUT_DIR / file for file in file_output]
-#
-#     return {
-#         "actions": [
-#             "ipython ./src/example_table.py",
-#             "ipython ./src/pandas_to_latex_demo.py",
-#         ],
-#         "targets": targets,
-#         "file_dep": file_dep,
-#         "clean": True,
-#     }
-
-
-# def task_example_plot():
-#     """Example plots"""
-#     file_dep = [Path("./src") / file for file in ["example_plot.py"]]
-#     file_output = ["example_plot.png"]
-#     targets = [OUTPUT_DIR / file for file in file_output]
-#
-#     return {
-#         "actions": [
-#             "ipython ./src/example_plot.py",
-#         ],
-#         "targets": targets,
-#         "file_dep": file_dep,
-#         "clean": True,
-#     }
-
-
-notebook_tasks = {
-    "01_example_notebook_interactive_ipynb": {
-        "path": "./src/01_example_notebook_interactive_ipynb.py",
-        "file_dep": [],
-        "targets": [],
-    },
-    # "02_example_with_dependencies_ipynb": {
-    #     "path": "./src/02_example_with_dependencies_ipynb.py",
-    #     "file_dep": [],
-    #     "targets": [OUTPUT_DIR / "GDP_graph.png"],
-    # },
-}
-
 notebook_tasks_cds = {
     "summary_cds_bond_basis_ipynb": {
         "path": "./src/summary_cds_bond_basis_ipynb.py",
@@ -186,36 +125,6 @@ notebook_tasks_cds = {
     },
 }
 
-
-# fmt: off
-def task_run_notebooks():
-    """Preps the notebooks for presentation format.
-    Execute notebooks if the script version of it has been changed.
-    """
-    for notebook in notebook_tasks.keys():
-        pyfile_path = Path(notebook_tasks[notebook]["path"])
-        notebook_path = pyfile_path.with_suffix(".ipynb")
-        yield {
-            "name": notebook,
-            "actions": [
-                """python -c "import sys; from datetime import datetime; print(f'Start """ + notebook + """: {datetime.now()}', file=sys.stderr)" """,
-                f"jupytext --to notebook --output {notebook_path} {pyfile_path}",
-                jupyter_execute_notebook(notebook_path),
-                jupyter_to_html(notebook_path),
-                mv(notebook_path, OUTPUT_DIR),
-                """python -c "import sys; from datetime import datetime; print(f'End """ + notebook + """: {datetime.now()}', file=sys.stderr)" """,
-            ],
-            "file_dep": [
-                pyfile_path,
-                *notebook_tasks[notebook]["file_dep"],
-            ],
-            "targets": [
-                OUTPUT_DIR / f"{notebook}.html",
-                *notebook_tasks[notebook]["targets"],
-            ],
-            "clean": True,
-        }
-# fmt: on
 
 def task_run_cds_notebooks():
     """Execute CDS-bond basis summary notebooks."""
@@ -241,78 +150,6 @@ def task_run_cds_notebooks():
             "clean": True,
             "task_dep": ["calc"],
         }
-
-###############################################################
-## Task below is for LaTeX compilation
-###############################################################
-
-
-# def task_compile_latex_docs():
-#     """Compile the LaTeX documents to PDFs"""
-#     file_dep = [
-#         "./reports/report_example.tex",
-#         "./reports/my_article_header.sty",
-#         "./reports/slides_example.tex",
-#         "./reports/my_beamer_header.sty",
-#         "./reports/my_common_header.sty",
-#         "./reports/report_simple_example.tex",
-#         "./reports/slides_simple_example.tex",
-#         "./src/example_plot.py",
-#         "./src/example_table.py",
-#     ]
-#     targets = [
-#         "./reports/report_example.pdf",
-#         "./reports/slides_example.pdf",
-#         "./reports/report_simple_example.pdf",
-#         "./reports/slides_simple_example.pdf",
-#     ]
-#
-#     return {
-#         "actions": [
-#             # My custom LaTeX templates
-#             "latexmk -xelatex -halt-on-error -cd ./reports/report_example.tex",  # Compile
-#             "latexmk -xelatex -halt-on-error -c -cd ./reports/report_example.tex",  # Clean
-#             "latexmk -xelatex -halt-on-error -cd ./reports/slides_example.tex",  # Compile
-#             "latexmk -xelatex -halt-on-error -c -cd ./reports/slides_example.tex",  # Clean
-#             # Simple templates based on small adjustments to Overleaf templates
-#             "latexmk -xelatex -halt-on-error -cd ./reports/report_simple_example.tex",  # Compile
-#             "latexmk -xelatex -halt-on-error -c -cd ./reports/report_simple_example.tex",  # Clean
-#             "latexmk -xelatex -halt-on-error -cd ./reports/slides_simple_example.tex",  # Compile
-#             "latexmk -xelatex -halt-on-error -c -cd ./reports/slides_simple_example.tex",  # Clean
-#         ],
-#         "targets": targets,
-#         "file_dep": file_dep,
-#         "clean": True,
-#     }
-
-sphinx_targets = [
-    "./docs/index.html",
-]
-
-
-def task_build_chartbook_site():
-    """Compile Sphinx Docs"""
-    notebook_scripts = [
-        Path(notebook_tasks[notebook]["path"])
-        for notebook in notebook_tasks.keys()
-    ]
-    file_dep = [
-        "./README.md",
-        "./chartbook.toml",
-        *notebook_scripts,
-    ]
-
-    return {
-        "actions": [
-            "chartbook build -f",
-        ],  # Use docs as build destination
-        "targets": sphinx_targets,
-        "file_dep": file_dep,
-        "task_dep": [
-            "run_notebooks",
-        ],
-        "clean": True,
-    }
 
 ###############################################################
 ## Changes New

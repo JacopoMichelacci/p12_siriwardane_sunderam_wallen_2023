@@ -1,5 +1,5 @@
 ---
-date: 2026-02-09 23:14:48
+date: 2026-02-16 11:46:22
 tags: WRDS Markit, Open Source Bond Asset Pricing
 category: Cds, Bonds, Arbitrage, Basis, Replication
 ---
@@ -82,7 +82,7 @@ Based on Siriwardane, Sunderam, and Wallen's "Segmented Arbitrage" methodology.
 | Contributors                    | Michelacci and Ferreira           |
 | Git Repo URL                    | https://github.com/JacopoMichelacci/p12_siriwardane_sunderam_wallen_2023                        |
 | Pipeline Web Page               | <a href="file:///Users/flavio/GitHub/p12_siriwardane_sunderam_wallen_2023/docs/index.html">Pipeline Web Page      |
-| Date of Last Code Update        | 2026-02-09 23:14:48           |
+| Date of Last Code Update        | 2026-02-16 11:46:22           |
 | OS Compatibility                |  |
 | Linked Dataframes               |  [SE:ftsfr_cds_bond_basis_aggregated](../dataframes/SE/ftsfr_cds_bond_basis_aggregated.md)<br>  [SE:ftsfr_cds_bond_basis_non_aggregated](../dataframes/SE/ftsfr_cds_bond_basis_non_aggregated.md)<br>  |
 
