@@ -17,7 +17,7 @@ BASE_DIR = chartbook.env.get_project_root()
 DATA_DIR = BASE_DIR / "_data"
 WRDS_USERNAME = chartbook.env.get("WRDS_USERNAME")
 START_DATE = pd.Timestamp("1925-01-01")
-END_DATE = pd.Timestamp("2024-01-01")
+END_DATE = pd.Timestamp("2025-01-01")
 
 
 def get_mapping(wrds_username=WRDS_USERNAME):

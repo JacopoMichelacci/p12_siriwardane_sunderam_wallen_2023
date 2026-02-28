@@ -23,7 +23,7 @@ END_DATE = pd.Timestamp("2024-01-01")
 def get_cds_data_as_dict(wrds_username=WRDS_USERNAME):
     """
     Connects to a WRDS (Wharton Research Data Services) database and fetches Credit Default Swap (CDS) data
-    for each year from 2001 to 2023 from tables named `markit.CDS{year}`. The data fetched includes the date,
+    for each year from 2001 to 2023 from tables named `markit_cds.cds{year}`. The data fetched includes the date,
     ticker, and parspread where the tenor is '5Y' and the country is 'United States'. The fetched data for each
     year is stored in a dictionary with the year as the key. The function finally returns this dictionary.
 
@@ -32,10 +32,10 @@ def get_cds_data_as_dict(wrds_username=WRDS_USERNAME):
         the date, ticker, and parspread for that year.
     """
     db = wrds.Connection(wrds_username=wrds_username)
-    cds_data = {}
+    cds_data = {} 
     for year in range(2001, 2024):  # Loop from 2001 to 2023
-        print(f"Pulling markit.CDS{year}...", flush=True)
-        table_name = f"markit.CDS{year}"  # Generate table name dynamically
+        print(f"Pulling markit_cds.cds{year}...", flush=True)
+        table_name = f"markit_cds.cds{year}"  # Generate table name dynamically
         query = f"""
         SELECT DISTINCT
             date, -- The date on which points on a curve were calculated
@@ -53,7 +53,7 @@ def get_cds_data_as_dict(wrds_username=WRDS_USERNAME):
             tenor IN ('1Y', '3Y', '5Y', '7Y', '10Y')
         """
         cds_data[year] = db.raw_sql(query, date_cols=["date"])
-        print(f"Finished markit.CDS{year}: {len(cds_data[year])} rows", flush=True)
+        print(f"Finished markit_cds.cds{year}: {len(cds_data[year])} rows", flush=True)
     return cds_data
 
 
@@ -104,7 +104,7 @@ def get_value_counts(variable, wrds_username=WRDS_USERNAME):
             {variable},
             COUNT(*) as count
         FROM
-            markit.CDS{year}
+            markit_cds.cds{year}
         GROUP BY
             {variable}
         """
